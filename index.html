@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Longparish CC · 18-0 · The Unbeaten Season</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#252758;--indigo-deep:#1a1c43;--indigo-card:#2e3068;--indigo-soft:#393c7a;
+    --line:rgba(255,255,255,.14);--line-strong:rgba(255,255,255,.30);
+    --white:#ffffff;--muted:#b7bae4;--yellow:#ffd23f;--yellow-deep:#f0b400;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:radial-gradient(130% 90% at 50% -10%, #2c2e6b 0%, var(--indigo) 50%, var(--indigo-deep) 100%);
+    color:var(--white);font-family:"Spectral",Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:1000px;margin:0 auto;padding:22px 18px 80px}
+  .screen{display:none;animation:fade .4s ease both}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  .eyebrow{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.3em;font-size:11px;color:var(--yellow);font-weight:700}
+  h1,h2,h3{font-family:"Anton",Impact,sans-serif;font-weight:400;letter-spacing:.01em;line-height:.95;margin:0;color:var(--white)}
+  .mono{font-family:"Space Mono",monospace}
+  a{color:var(--yellow)}
+  .mast{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:6px}
+  .crest{width:36px;height:36px;border-radius:50%;flex:0 0 auto;background:var(--indigo-deep);border:2px solid var(--yellow);
+    display:flex;align-items:center;justify-content:center;font-family:"Anton";color:var(--yellow);font-size:15px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+  .mast .club{font-family:"Space Mono",monospace;letter-spacing:.26em;text-transform:uppercase;font-size:12px;color:var(--white)}
+  .hero{text-align:center;padding:28px 0 8px}
+  .hero .est{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}
+  .bignum{position:relative;display:inline-block;margin:8px 0 6px;padding-bottom:14px}
+  .bignum h1{font-size:clamp(96px,25vw,206px);color:var(--white);text-shadow:0 5px 0 rgba(0,0,0,.25)}
+  .bignum::after{content:"";position:absolute;left:6%;right:6%;bottom:0;height:8px;border-radius:8px;background:var(--yellow);box-shadow:0 0 22px rgba(255,210,63,.5)}
+  .hero .lede{font-size:clamp(17px,2.4vw,21px);max-width:560px;margin:14px auto 4px;color:var(--white)}
+  .hero .sub{color:var(--muted);max-width:560px;margin:0 auto;font-size:15px}
+  .btn{font-family:"Space Mono",monospace;font-weight:700;text-transform:uppercase;letter-spacing:.13em;font-size:14px;border:none;cursor:pointer;
+    padding:15px 26px;border-radius:3px;color:var(--indigo);background:var(--yellow);transition:transform .12s ease, filter .12s ease;display:inline-flex;align-items:center;gap:10px}
+  .btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .btn:active{transform:translateY(0)}
+  .btn:focus-visible{outline:3px solid var(--white);outline-offset:2px}
+  .btn.ghost{background:transparent;color:var(--white);box-shadow:inset 0 0 0 1.5px var(--line-strong)}
+  .btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--white)}
+  .btn:disabled{opacity:.38;cursor:not-allowed;transform:none;filter:none}
+  .btn.lg{padding:18px 34px;font-size:15px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .record{display:flex;justify-content:center;margin:40px auto 0;max-width:520px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .record div{flex:1;padding:16px 10px;text-align:center;border-right:1px solid var(--line)}
+  .record div:last-child{border-right:none}
+  .record .n{font-family:"Anton";font-size:36px;color:var(--yellow);line-height:1}
+  .record .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+  .panel{background:rgba(0,0,0,.16);border:1px solid var(--line);border-radius:5px;padding:22px;margin-top:18px}
+  .panel-title{display:flex;align-items:baseline;gap:12px;margin-bottom:4px}
+  .panel-title h2{font-size:24px}
+  .panel-title .num{font-family:"Space Mono",monospace;color:var(--yellow);font-weight:700;font-size:13px}
+  .muted{color:var(--muted)}
+  .small{font-size:13px}
+  .setgrid{display:grid;gap:18px;margin-top:18px}
+  .optline{border-top:1px solid var(--line);padding-top:16px}
+  .optline > .label{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--white);margin-bottom:10px}
+  .opts{display:flex;gap:10px;flex-wrap:wrap}
+  .opt{flex:1;min-width:130px;text-align:left;background:transparent;color:var(--white);cursor:pointer;border:1px solid var(--line-strong);border-radius:4px;padding:12px 14px;transition:.12s}
+  .opt:hover{border-color:var(--white)}
+  .opt.sel{border-color:var(--yellow);background:rgba(255,210,63,.13)}
+  .opt .ot{font-family:"Space Mono",monospace;font-weight:700;font-size:14px}
+  .opt .od{font-size:12px;color:var(--muted);margin-top:3px}
+  .budgetbox{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .bcell{flex:1;min-width:130px;background:var(--indigo-card);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+  .bcell .bn{font-family:"Anton";font-size:30px;color:var(--white);line-height:1}
+  .bcell .bl{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .note{font-size:13px;color:var(--muted);margin-top:12px;border-left:2px solid var(--yellow);padding-left:12px}
+  .draft-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .budgetbar{flex:1;min-width:220px}
+  .draft-stats{display:flex;gap:18px;flex-wrap:wrap;font-family:"Space Mono",monospace;font-size:13px}
+  .draft-stats b{color:var(--yellow)}
+  .bar{height:10px;background:rgba(0,0,0,.28);border-radius:6px;overflow:hidden;margin-top:8px;border:1px solid var(--line)}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--indigo-soft),var(--yellow));transition:width .35s ease}
+  .bar.over > i{background:#ff7a6b}
+  .spinbox{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--indigo-card);border:1px solid var(--line-strong);border-radius:6px;padding:18px 22px;margin-top:18px}
+  .spin-tag{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .spin-team{font-family:"Anton";font-size:clamp(30px,6vw,46px);color:var(--yellow);line-height:1;margin-top:4px}
+  .spin-team .yr{color:var(--white)}
+  .spin-count{font-family:"Space Mono",monospace;font-size:12px;color:var(--muted);margin-top:6px}
+  .spinning .spin-team{opacity:.55}
+  .pool{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:10px;margin-top:16px}
+  .pcard{position:relative;text-align:left;color:var(--white);background:var(--indigo-card);border:1px solid var(--line-strong);border-radius:5px;padding:13px 14px;cursor:pointer;transition:.12s}
+  .pcard:hover{border-color:var(--white);transform:translateY(-2px)}
+  .pcard:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+  .pcard.unaff{opacity:.32;cursor:not-allowed}
+  .pcard.unaff:hover{transform:none;border-color:var(--line-strong)}
+  .pcard.picked{opacity:.5;cursor:default;border-color:var(--yellow)}
+  .pcard.picked:hover{transform:none}
+  .pcard .pn{font-weight:600;font-size:16px;line-height:1.15;padding-right:34px}
+  .pcard .meta{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+  .role{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:3px;color:var(--indigo);font-weight:700}
+  .role.BAT{background:var(--yellow)}
+  .role.BOWL{background:#8fb6ff}
+  .role.AR{background:#8ee0b0}
+  .role.WK{background:#d9a8ff}
+  .pcard .sc{font-family:"Space Mono",monospace;font-size:12px;color:var(--muted)}
+  .pcard .cost{position:absolute;top:11px;right:13px;font-family:"Anton";font-size:25px;color:var(--yellow);line-height:1}
+  .pcard.unaff .cost{color:#ff9a8e}
+  .pcard .pickflag{position:absolute;bottom:10px;right:13px;font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.1em;color:var(--yellow)}
+  .empty-note{grid-column:1/-1;color:var(--muted);font-family:"Space Mono",monospace;font-size:13px;padding:14px;text-align:center}
+  .roster-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:12px}
+  @media(max-width:680px){.roster-grid{grid-template-columns:1fr 1fr}}
+  .roster-col{background:rgba(0,0,0,.14);border:1px solid var(--line);border-radius:5px;padding:11px 12px}
+  .roster-col h4{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+  .roster-col h4 .ct{font-family:"Anton";font-size:16px;letter-spacing:0;color:var(--white)}
+  .roster-col h4 .ct.ok{color:#8ee0b0}
+  .roster-col h4 .ct.need{color:#ffb37a}
+  .roster-chips{display:flex;flex-direction:column;gap:6px}
+  .rchip{display:flex;align-items:center;justify-content:space-between;gap:6px;background:var(--indigo-soft);border:1px solid var(--line);border-radius:4px;padding:5px 6px 5px 10px;font-size:13px;color:var(--white)}
+  .rchip .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rchip .cc{font-family:"Space Mono",monospace;color:var(--yellow);font-size:12px;margin-left:6px}
+  .rchip button{cursor:pointer;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.3);color:var(--white);border:none;font-family:"Space Mono",monospace;font-size:12px;line-height:1;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .rchip button:hover{background:#ff7a6b;color:var(--indigo)}
+  .rempty{color:var(--muted);opacity:.55;font-size:12px;font-style:italic;padding:2px 2px}
+  .roster-rule{color:var(--muted);margin-top:12px;border-left:2px solid #ffb37a;padding-left:12px}
+  .roster-rule.met{border-color:#8ee0b0}
+  .sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:6px 0 4px}
+  .sum-grid .bcell .bn{color:var(--yellow)}
+  .verdict{font-style:italic;font-size:18px;border-left:3px solid var(--yellow);padding:6px 0 6px 16px;margin:16px 0;color:var(--white)}
+  .xi-list{columns:2;column-gap:24px;margin-top:6px}
+  @media(max-width:560px){.xi-list{columns:1}.sum-grid{grid-template-columns:1fr 1fr}}
+  .xi-list .row{break-inside:avoid;display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .xi-list .row .rr{font-family:"Space Mono",monospace;font-size:11px;color:var(--muted)}
+  .scorehead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+  .gamecount{font-family:"Space Mono",monospace;font-size:13px;color:var(--muted)}
+  .feed{margin-top:14px;border:1px solid var(--line);border-radius:5px;max-height:210px;overflow:auto;background:rgba(0,0,0,.16)}
+  .feed .ev{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:14px;animation:fade .3s both}
+  .feed .ev:last-child{border-bottom:none}
+  .feed .ev .opp{flex:1}
+  .feed .ev .res{font-family:"Space Mono",monospace;font-weight:700}
+  .res.W{color:#8ee0b0}.res.L{color:#ff9a8e}.res.D{color:var(--yellow)}
+  table.league{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+  table.league th{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:right;padding:8px 6px;border-bottom:1px solid var(--line-strong)}
+  table.league th.tn{text-align:left}
+  table.league td{padding:9px 6px;text-align:right;border-bottom:1px solid var(--line)}
+  table.league td.tn{text-align:left;font-family:"Spectral";font-size:14px}
+  table.league tr.you td{background:rgba(255,210,63,.13)}
+  table.league tr.you td.tn{font-weight:700;color:var(--yellow)}
+  .pos{font-family:"Space Mono",monospace;color:var(--muted)}
+  .season-rec{display:flex;margin-top:14px;border:1px solid var(--line);border-radius:4px;overflow:hidden;max-width:520px}
+  .season-rec div{flex:1;text-align:center;padding:12px 6px;border-right:1px solid var(--line)}
+  .season-rec div:last-child{border-right:none}
+  .season-rec .n{font-family:"Anton";font-size:28px}
+  .season-rec .l{font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+  .ctrls{display:flex;gap:10px;flex-wrap:wrap}
+  .leaders{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media(max-width:520px){.leaders{grid-template-columns:1fr}}
+  .lead-col h3{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px}
+  .lead-row{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .lead-row .v{font-family:"Space Mono",monospace;color:var(--white)}
+  .lead-row .rk{color:var(--muted);font-family:"Space Mono",monospace;font-size:12px;margin-right:8px}
+  .end-banner{text-align:center;padding:24px 10px 6px}
+  .end-banner h1{font-size:clamp(46px,12vw,96px);color:var(--yellow)}
+  .end-tag{font-family:"Space Mono",monospace;letter-spacing:.18em;text-transform:uppercase;font-size:13px;color:var(--white);margin-top:8px}
+  .share{font-family:"Space Mono",monospace;font-size:13px;white-space:pre-wrap;background:rgba(0,0,0,.2);border:1px dashed var(--line-strong);border-radius:5px;padding:16px;margin-top:16px;line-height:1.7;color:var(--white)}
+  .foot{text-align:center;margin-top:34px;font-size:12px;color:var(--muted);font-family:"Space Mono",monospace;letter-spacing:.03em}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--indigo-deep);color:var(--white);border:1px solid var(--yellow);padding:12px 20px;border-radius:4px;font-family:"Space Mono",monospace;font-size:13px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:50}
+  .toast.show{opacity:1}
+  .backlink{background:none;border:none;color:var(--muted);font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:18px;padding:6px 0}
+  .backlink:hover{color:var(--white)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="s-title" class="screen active">
+    <div class="mast"><span class="crest">L</span><span class="club">Longparish Cricket Club · Est. 1878</span></div>
+    <div class="hero">
+      <div class="est">The Unbeaten Season · Test Valley, Hampshire</div>
+      <div class="bignum"><h1>18-0</h1></div>
+      <p class="lede">Build the ultimate Longparish XI. Survive the season.</p>
+      <p class="sub">Spin a team and a year, then sign a player who actually turned out for that side that summer — real club averages, 2010 to 2026. Build eleven within budget, then play the real Hampshire League division home and away. Can you go the full eighteen unbeaten?</p>
+      <div class="cta-row"><button class="btn lg" onclick="go('settings')">Start New Run &rarr;</button></div>
+      <div class="record">
+        <div><div class="n" id="t-best">0</div><div class="l">Best Wins</div></div>
+        <div><div class="n" id="t-unbeaten">0</div><div class="l">Unbeaten Seasons</div></div>
+        <div><div class="n" id="t-runs">0</div><div class="l">Runs Played</div></div>
+      </div>
+    </div>
+    <div class="foot">An unofficial fan game · Built from Longparish CC league averages, 2010&ndash;2026</div>
+  </section>
+
+  <section id="s-settings" class="screen">
+    <div class="panel-title"><span class="num">PRE&middot;SEASON</span><h2>Draft Settings</h2></div>
+    <p class="muted small">Set your terms, then start spinning for players.</p>
+    <div class="panel">
+      <div class="panel-title"><span class="num">&#9888;</span><h2 style="font-size:19px">The Budget</h2></div>
+      <div class="budgetbox">
+        <div class="bcell"><div class="bn" id="set-budget">800</div><div class="bl">Squad budget</div></div>
+        <div class="bcell"><div class="bn">11</div><div class="bl">Players to pick</div></div>
+        <div class="bcell"><div class="bn" id="set-avg">73</div><div class="bl">Avg per player</div></div>
+      </div>
+      <p class="note">Every player costs their rating. You can only sign from whoever the spin throws up — and you spin a fresh team &amp; year after every pick. Already-signed players show greyed out. Balance the side: all bat and no ball loses leagues.</p>
+    </div>
+    <div class="setgrid">
+      <div class="optline"><div class="label">Difficulty</div><div class="opts" id="opt-diff"></div></div>
+      <div class="optline"><div class="label">Player Ratings</div><div class="opts" id="opt-rate"></div></div>
+    </div>
+    <div class="cta-row" style="justify-content:flex-start"><button class="btn lg" onclick="startDraft()">Start Drafting &rarr;</button></div>
+    <button class="backlink" onclick="go('title')">&larr; Back</button>
+  </section>
+
+  <section id="s-draft" class="screen">
+    <div class="panel-title"><span class="num" id="pick-label">PICK 1 OF 11</span><h2>Spin &amp; Sign</h2></div>
+
+    <div class="panel" id="tracker">
+      <div class="panel-title"><span class="num" id="roster-count">0 / 11</span><h2 style="font-size:18px">Your XI</h2></div>
+      <div class="roster-grid" id="roster-grid"></div>
+      <div class="roster-rule small" id="roster-rule">Minimum: 3 batters · 3 bowlers · 1 keeper — fill the other four however you like.</div>
+    </div>
+
+    <div class="draft-head">
+      <div class="budgetbar">
+        <div class="draft-stats"><span>Budget left <b id="d-left">850</b></span><span>Spent <b id="d-spent">0</b></span><span>Re-spins <b id="d-respins">2</b></span></div>
+        <div class="bar" id="d-bar"><i style="width:0%"></i></div>
+      </div>
+      <button class="btn" id="btn-confirm" onclick="confirmXI()" disabled>Confirm XI &rarr;</button>
+    </div>
+    <div class="spinbox" id="spinbox">
+      <div>
+        <div class="spin-tag">Now spinning · sign a player who featured for</div>
+        <div class="spin-team" id="spin-team">&mdash;</div>
+        <div class="spin-count" id="spin-count"></div>
+      </div>
+      <button class="btn ghost" id="btn-respin" onclick="manualRespin()">&#127922; Re-spin</button>
+    </div>
+    <div class="pool" id="pool"></div>
+    <button class="backlink" onclick="go('settings')">&larr; Change settings</button>
+  </section>
+
+  <section id="s-xi" class="screen">
+    <div class="panel-title"><span class="num">YOUR XI</span><h2>The Selected Eleven</h2></div>
+    <p class="muted small">Hampshire League · Longparish Cricket Club 1st XI</p>
+    <div class="sum-grid">
+      <div class="bcell"><div class="bn" id="x-ovr">—</div><div class="bl">Overall</div></div>
+      <div class="bcell"><div class="bn" id="x-bat">—</div><div class="bl">Batting</div></div>
+      <div class="bcell"><div class="bn" id="x-bowl">—</div><div class="bl">Bowling</div></div>
+    </div>
+    <div class="sum-grid">
+      <div class="bcell"><div class="bn" id="x-spent">—</div><div class="bl">Budget spent</div></div>
+      <div class="bcell"><div class="bn" id="x-finish">—</div><div class="bl">Predicted finish</div></div>
+      <div class="bcell"><div class="bn" id="x-odds">—</div><div class="bl">Odds to go unbeaten</div></div>
+    </div>
+    <div class="verdict" id="x-verdict">—</div>
+    <div class="panel">
+      <div class="panel-title"><span class="num">XI</span><h2 style="font-size:19px">Team Sheet</h2></div>
+      <div class="xi-list" id="x-list"></div>
+    </div>
+    <div class="cta-row" style="justify-content:flex-start">
+      <button class="btn lg" onclick="beginSeason()">Begin the Season &rarr;</button>
+      <button class="btn ghost" onclick="go('draft')">&larr; Re-pick</button>
+    </div>
+  </section>
+
+  <section id="s-season" class="screen">
+    <div class="panel-title"><span class="num">HAMPSHIRE LEAGUE</span><h2>The Campaign</h2></div>
+    <div class="scorehead">
+      <div class="gamecount" id="game-count">Game 0 of 18</div>
+      <div class="ctrls"><button class="btn ghost" id="btn-pause" onclick="togglePlay()">&#9208; Pause</button><button class="btn ghost" onclick="skipToEnd()">Skip to End &#9197;</button></div>
+    </div>
+    <div class="season-rec">
+      <div><div class="n" id="se-w" style="color:#8ee0b0">0</div><div class="l">Won</div></div>
+      <div><div class="n" id="se-d" style="color:var(--yellow)">0</div><div class="l">Drawn</div></div>
+      <div><div class="n" id="se-l" style="color:#ff9a8e">0</div><div class="l">Lost</div></div>
+      <div><div class="n" id="se-p">0</div><div class="l">Points</div></div>
+    </div>
+    <div class="feed" id="feed"></div>
+    <div class="panel">
+      <div class="panel-title"><span class="num">FORM</span><h2 style="font-size:19px">Season Leaders</h2></div>
+      <div class="leaders" id="leaders-live"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="num">TABLE</span><h2 style="font-size:19px">League Table</h2></div>
+      <table class="league"><thead><tr><th class="pos">#</th><th class="tn">Club</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th><th>NRR</th></tr></thead><tbody id="table-body"></tbody></table>
+      <p class="muted small" style="margin-top:10px">2 pts per win · 1 pt per draw · 0 per loss</p>
+    </div>
+  </section>
+
+  <section id="s-end" class="screen">
+    <div class="end-banner" id="end-banner"><div class="eyebrow">Final Whistle</div><h1 id="end-score">—</h1><div class="end-tag" id="end-tag">—</div></div>
+    <div class="sum-grid">
+      <div class="bcell"><div class="bn" id="e-pos">—</div><div class="bl">League finish</div></div>
+      <div class="bcell"><div class="bn" id="e-pts">—</div><div class="bl">Points</div></div>
+      <div class="bcell"><div class="bn" id="e-record">—</div><div class="bl">W–D–L</div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><span class="num">★</span><h2 style="font-size:19px">Players of the Season</h2></div>
+      <div class="leaders" id="leaders-end"></div>
+    </div>
+    <div class="share" id="share-text">—</div>
+    <div class="cta-row" style="justify-content:flex-start">
+      <button class="btn" onclick="copyShare()">&#128203; Copy Result</button>
+      <button class="btn ghost" onclick="go('settings')">New Run &rarr;</button>
+      <button class="btn ghost" onclick="go('title')">Home</button>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const GAMEDATA = {"players": [{"n": "Ross Stewart", "r": "AR", "bat": 79, "bowl": 89, "ovr": 96}, {"n": "William de Cani", "r": "BAT", "bat": 96, "bowl": 26, "ovr": 96}, {"n": "Zac Allen", "r": "AR", "bat": 76, "bowl": 90, "ovr": 96}, {"n": "Harry Martin", "r": "BOWL", "bat": 56, "bowl": 95, "ovr": 95}, {"n": "Billy Mead", "r": "BAT", "bat": 91, "bowl": 20, "ovr": 91}, {"n": "Ben Gardner", "r": "AR", "bat": 79, "bowl": 81, "ovr": 88}, {"n": "Barry Blackmore", "r": "AR", "bat": 69, "bowl": 82, "ovr": 87}, {"n": "Stuart Tognarelli", "r": "BAT", "bat": 87, "bowl": 18, "ovr": 87}, {"n": "Alex Coetzee", "r": "AR", "bat": 68, "bowl": 84, "ovr": 84}, {"n": "James Bevan", "r": "BOWL", "bat": 32, "bowl": 84, "ovr": 84}, {"n": "Chris Clarke", "r": "BOWL", "bat": 50, "bowl": 83, "ovr": 83}, {"n": "Dan Bearpark", "r": "WK", "bat": 83, "bowl": 35, "ovr": 83}, {"n": "Matthew Jackman", "r": "BOWL", "bat": 50, "bowl": 83, "ovr": 83}, {"n": "Michael Taplin", "r": "BAT", "bat": 83, "bowl": 25, "ovr": 83}, {"n": "Adam McNeilly", "r": "BAT", "bat": 82, "bowl": 20, "ovr": 82}, {"n": "Adriaan Maxwell", "r": "AR", "bat": 76, "bowl": 78, "ovr": 82}, {"n": "Jack Levy", "r": "AR", "bat": 74, "bowl": 76, "ovr": 81}, {"n": "Jack Ashmore", "r": "AR", "bat": 78, "bowl": 66, "ovr": 80}, {"n": "Martin Savage", "r": "AR", "bat": 65, "bowl": 76, "ovr": 80}, {"n": "Scott Sturt", "r": "AR", "bat": 66, "bowl": 78, "ovr": 80}, {"n": "Ed Gairdner", "r": "BAT", "bat": 78, "bowl": 24, "ovr": 78}, {"n": "Jordan Blackmore", "r": "BOWL", "bat": 58, "bowl": 77, "ovr": 77}, {"n": "Justin Jackman", "r": "BAT", "bat": 77, "bowl": 22, "ovr": 77}, {"n": "Martin Bearpark", "r": "WK", "bat": 77, "bowl": 14, "ovr": 77}, {"n": "Callum Giles", "r": "BAT", "bat": 75, "bowl": 35, "ovr": 75}, {"n": "Paul Blackmore", "r": "BAT", "bat": 72, "bowl": 20, "ovr": 72}, {"n": "Gary Taplin", "r": "AR", "bat": 62, "bowl": 67, "ovr": 70}, {"n": "George Kousseff", "r": "WK", "bat": 70, "bowl": 12, "ovr": 70}, {"n": "Matt Elder", "r": "AR", "bat": 60, "bowl": 68, "ovr": 70}, {"n": "Dominic Pike", "r": "BAT", "bat": 69, "bowl": 14, "ovr": 69}, {"n": "James Young", "r": "BOWL", "bat": 44, "bowl": 69, "ovr": 69}, {"n": "James Whiting", "r": "BAT", "bat": 68, "bowl": 21, "ovr": 68}, {"n": "Oliver Coetzee", "r": "BOWL", "bat": 46, "bowl": 68, "ovr": 68}, {"n": "Rory Kerr", "r": "WK", "bat": 68, "bowl": 20, "ovr": 68}, {"n": "Adam Lister", "r": "BAT", "bat": 66, "bowl": 12, "ovr": 66}, {"n": "Edward Perceval", "r": "BAT", "bat": 66, "bowl": 37, "ovr": 66}, {"n": "Tom Cady", "r": "AR", "bat": 66, "bowl": 46, "ovr": 66}, {"n": "Bob Sturt", "r": "BAT", "bat": 65, "bowl": 12, "ovr": 65}, {"n": "Harry Samways", "r": "BOWL", "bat": 47, "bowl": 65, "ovr": 65}, {"n": "Nathan Smith", "r": "BOWL", "bat": 43, "bowl": 65, "ovr": 65}, {"n": "Alex Brinton", "r": "BOWL", "bat": 47, "bowl": 64, "ovr": 64}, {"n": "Nick Partridge", "r": "BAT", "bat": 64, "bowl": 20, "ovr": 64}, {"n": "Tom Trinder", "r": "AR", "bat": 64, "bowl": 51, "ovr": 64}, {"n": "Sam Trinder", "r": "WK", "bat": 63, "bowl": 67, "ovr": 63}, {"n": "Ben Wheeler", "r": "BAT", "bat": 62, "bowl": 12, "ovr": 62}, {"n": "Joseph Brown", "r": "BAT", "bat": 62, "bowl": 35, "ovr": 62}, {"n": "Martyn Cook", "r": "BAT", "bat": 62, "bowl": 18, "ovr": 62}, {"n": "Mike Plant", "r": "BAT", "bat": 62, "bowl": 39, "ovr": 62}, {"n": "William Samways", "r": "WK", "bat": 62, "bowl": 12, "ovr": 62}, {"n": "Simon Paine", "r": "BAT", "bat": 61, "bowl": 12, "ovr": 61}, {"n": "Sam Woodward", "r": "BOWL", "bat": 47, "bowl": 60, "ovr": 60}, {"n": "Christian Dawson", "r": "BOWL", "bat": 43, "bowl": 59, "ovr": 59}, {"n": "Dougie Burt", "r": "BAT", "bat": 58, "bowl": 20, "ovr": 58}, {"n": "George Halfhide", "r": "BAT", "bat": 58, "bowl": 26, "ovr": 58}, {"n": "Luke Sanderson", "r": "BAT", "bat": 58, "bowl": 14, "ovr": 58}, {"n": "William Arnold", "r": "BAT", "bat": 58, "bowl": 30, "ovr": 58}, {"n": "Jonnie Wahid", "r": "BAT", "bat": 57, "bowl": 27, "ovr": 57}, {"n": "Jonny Maxwell", "r": "BAT", "bat": 57, "bowl": 24, "ovr": 57}, {"n": "Les Martinez", "r": "BAT", "bat": 57, "bowl": 12, "ovr": 57}, {"n": "Oliver Oram", "r": "BOWL", "bat": 44, "bowl": 57, "ovr": 57}, {"n": "Jamie Blackmore", "r": "BAT", "bat": 56, "bowl": 15, "ovr": 56}, {"n": "John Young", "r": "BAT", "bat": 56, "bowl": 22, "ovr": 56}, {"n": "Chris Monger", "r": "BAT", "bat": 55, "bowl": 22, "ovr": 55}, {"n": "Simon Tasker", "r": "BAT", "bat": 55, "bowl": 12, "ovr": 55}, {"n": "Toby Trinder", "r": "BOWL", "bat": 51, "bowl": 55, "ovr": 55}, {"n": "Warren Bonathan", "r": "BAT", "bat": 55, "bowl": 21, "ovr": 55}, {"n": "Stephen Kerr", "r": "BAT", "bat": 54, "bowl": 23, "ovr": 54}, {"n": "Charlie Russell", "r": "BAT", "bat": 53, "bowl": 26, "ovr": 53}, {"n": "Alex Smith", "r": "BAT", "bat": 52, "bowl": 12, "ovr": 52}, {"n": "Brad Aldridge", "r": "BOWL", "bat": 52, "bowl": 52, "ovr": 52}, {"n": "Brendon Tasker", "r": "BAT", "bat": 52, "bowl": 19, "ovr": 52}, {"n": "Jack Cady", "r": "BOWL", "bat": 46, "bowl": 52, "ovr": 52}, {"n": "James Hillier", "r": "BAT", "bat": 52, "bowl": 12, "ovr": 52}, {"n": "Dan Silverwood", "r": "BAT", "bat": 51, "bowl": 16, "ovr": 51}, {"n": "Nick Dawnay", "r": "BAT", "bat": 51, "bowl": 35, "ovr": 51}, {"n": "Olly Maxwell", "r": "BAT", "bat": 51, "bowl": 21, "ovr": 51}, {"n": "Sean Gallagher", "r": "BAT", "bat": 51, "bowl": 12, "ovr": 51}, {"n": "Alfie Smith", "r": "BAT", "bat": 50, "bowl": 16, "ovr": 50}, {"n": "Barry Ewens", "r": "BAT", "bat": 50, "bowl": 12, "ovr": 50}, {"n": "Ben Simpson", "r": "BAT", "bat": 50, "bowl": 12, "ovr": 50}, {"n": "Charlie Martin", "r": "BAT", "bat": 50, "bowl": 20, "ovr": 50}, {"n": "Harry Brewer", "r": "BAT", "bat": 50, "bowl": 23, "ovr": 50}, {"n": "Luke Benzing", "r": "BAT", "bat": 50, "bowl": 40, "ovr": 50}, {"n": "Richard Mayon-White", "r": "BAT", "bat": 50, "bowl": 28, "ovr": 50}, {"n": "Steve Benco", "r": "BAT", "bat": 50, "bowl": 12, "ovr": 50}, {"n": "Adam Seidman", "r": "BAT", "bat": 49, "bowl": 22, "ovr": 49}, {"n": "Chris de Cani", "r": "BAT", "bat": 49, "bowl": 12, "ovr": 49}, {"n": "Dan Shaughnessy", "r": "BAT", "bat": 49, "bowl": 12, "ovr": 49}, {"n": "Daniel Perceval", "r": "BAT", "bat": 49, "bowl": 21, "ovr": 49}, {"n": "David Hainsworth", "r": "BAT", "bat": 49, "bowl": 20, "ovr": 49}, {"n": "Edward Webber", "r": "BAT", "bat": 49, "bowl": 23, "ovr": 49}, {"n": "James Halle-Smith", "r": "BAT", "bat": 49, "bowl": 12, "ovr": 49}, {"n": "Joseph Gumn", "r": "BAT", "bat": 49, "bowl": 26, "ovr": 49}, {"n": "Myles Cole", "r": "BAT", "bat": 49, "bowl": 12, "ovr": 49}, {"n": "Paul Giles", "r": "BAT", "bat": 49, "bowl": 22, "ovr": 49}, {"n": "A.N Other", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Akash Bhasin", "r": "BAT", "bat": 48, "bowl": 21, "ovr": 48}, {"n": "Andrew Proctor", "r": "BAT", "bat": 48, "bowl": 21, "ovr": 48}, {"n": "Andy Poole", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Andy Roberts", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Barry Shadwell", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Ben Arnold", "r": "BAT", "bat": 48, "bowl": 15, "ovr": 48}, {"n": "Cameron Proctor", "r": "BAT", "bat": 48, "bowl": 20, "ovr": 48}, {"n": "Charlotte Bryan", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "D Clark", "r": "BAT", "bat": 48, "bowl": 21, "ovr": 48}, {"n": "Daniel Sanderson", "r": "BAT", "bat": 48, "bowl": 18, "ovr": 48}, {"n": "Darren Clarke", "r": "BAT", "bat": 48, "bowl": 20, "ovr": 48}, {"n": "Dean Hanham", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Edward Drew", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Edward Whitehouse", "r": "BAT", "bat": 48, "bowl": 21, "ovr": 48}, {"n": "Elliot Kerr", "r": "BAT", "bat": 48, "bowl": 22, "ovr": 48}, {"n": "Jack Murphy", "r": "BAT", "bat": 48, "bowl": 14, "ovr": 48}, {"n": "Jonathan Arnold", "r": "BAT", "bat": 48, "bowl": 16, "ovr": 48}, {"n": "Matt Paice", "r": "BAT", "bat": 48, "bowl": 29, "ovr": 48}, {"n": "Matthew Brown", "r": "BAT", "bat": 48, "bowl": 22, "ovr": 48}, {"n": "Oliver Lee", "r": "BAT", "bat": 48, "bowl": 25, "ovr": 48}, {"n": "Ollie Keefe", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Owen Bishop", "r": "BAT", "bat": 48, "bowl": 18, "ovr": 48}, {"n": "Phil Clark", "r": "BAT", "bat": 48, "bowl": 21, "ovr": 48}, {"n": "Richard Bryant", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Sam Gardner", "r": "BAT", "bat": 48, "bowl": 19, "ovr": 48}, {"n": "Steve Aldridge", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Tristan Crook", "r": "BAT", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Will Bryant", "r": "WK", "bat": 48, "bowl": 12, "ovr": 48}, {"n": "Charlie Elder", "r": "BAT", "bat": 47, "bowl": 23, "ovr": 47}, {"n": "Harry Griffin", "r": "BAT", "bat": 47, "bowl": 31, "ovr": 47}, {"n": "Paul Halfhide", "r": "BAT", "bat": 47, "bowl": 20, "ovr": 47}, {"n": "Ray Smith", "r": "BAT", "bat": 47, "bowl": 12, "ovr": 47}, {"n": "Sam Frost", "r": "BAT", "bat": 47, "bowl": 19, "ovr": 47}, {"n": "Tom Waite", "r": "BAT", "bat": 47, "bowl": 21, "ovr": 47}, {"n": "William Jackman", "r": "BAT", "bat": 47, "bowl": 19, "ovr": 47}, {"n": "Ben Mayon-White", "r": "BAT", "bat": 46, "bowl": 37, "ovr": 46}, {"n": "Charlie Keefe", "r": "BAT", "bat": 46, "bowl": 28, "ovr": 46}, {"n": "Charlie Waite", "r": "BAT", "bat": 46, "bowl": 20, "ovr": 46}, {"n": "Clive Burnard", "r": "BAT", "bat": 46, "bowl": 12, "ovr": 46}, {"n": "Martin Hanham", "r": "BAT", "bat": 46, "bowl": 23, "ovr": 46}, {"n": "Oliver Burt", "r": "BAT", "bat": 46, "bowl": 23, "ovr": 46}, {"n": "William Wakeford", "r": "BAT", "bat": 46, "bowl": 24, "ovr": 46}, {"n": "Aidan La Croix", "r": "BAT", "bat": 45, "bowl": 21, "ovr": 45}, {"n": "Alan Longden", "r": "BAT", "bat": 45, "bowl": 12, "ovr": 45}, {"n": "Alex Hart", "r": "BAT", "bat": 45, "bowl": 12, "ovr": 45}, {"n": "Dan Pomroy", "r": "WK", "bat": 45, "bowl": 15, "ovr": 45}, {"n": "Findlay Waite", "r": "BAT", "bat": 45, "bowl": 20, "ovr": 45}, {"n": "James Brown", "r": "WK", "bat": 45, "bowl": 12, "ovr": 45}, {"n": "Jonathan Wells", "r": "BAT", "bat": 45, "bowl": 12, "ovr": 45}, {"n": "Joseph Figueiredo", "r": "BAT", "bat": 45, "bowl": 24, "ovr": 45}, {"n": "Matt Hewitt", "r": "BAT", "bat": 45, "bowl": 12, "ovr": 45}, {"n": "Owen Tagg", "r": "BAT", "bat": 45, "bowl": 12, "ovr": 45}, {"n": "Alex Bundy", "r": "BAT", "bat": 44, "bowl": 26, "ovr": 44}, {"n": "Charlie Hillier", "r": "BAT", "bat": 44, "bowl": 32, "ovr": 44}, {"n": "Toby Giles", "r": "BAT", "bat": 44, "bowl": 18, "ovr": 44}, {"n": "Leon Stevens", "r": "BAT", "bat": 43, "bowl": 12, "ovr": 43}, {"n": "Mali Colloredo", "r": "BAT", "bat": 43, "bowl": 26, "ovr": 43}, {"n": "Tally O'Farrell", "r": "BAT", "bat": 43, "bowl": 26, "ovr": 43}, {"n": "Wilf Hillier", "r": "BAT", "bat": 43, "bowl": 24, "ovr": 43}, {"n": "Haydon Oram", "r": "BAT", "bat": 42, "bowl": 17, "ovr": 42}, {"n": "Kieron Tasker", "r": "BOWL", "bat": 42, "bowl": 42, "ovr": 42}, {"n": "Stephen Williams", "r": "BAT", "bat": 42, "bowl": 32, "ovr": 42}, {"n": "William McDermott", "r": "BOWL", "bat": 43, "bowl": 38, "ovr": 38}, {"n": "Conal Proctor", "r": "BOWL", "bat": 49, "bowl": 35, "ovr": 35}, {"n": "Jack Proctor", "r": "BOWL", "bat": 43, "bowl": 31, "ovr": 31}, {"n": "Timo Oram", "r": "BOWL", "bat": 47, "bowl": 30, "ovr": 30}], "appear": {"1st XI": {"2010": [0, 1, 6, 7, 10, 12, 18, 25, 27, 34, 58, 61, 69, 86, 118, 121, 161], "2011": [0, 1, 5, 6, 7, 8, 10, 12, 13, 18, 20, 23, 25, 27, 34, 69, 113, 161], "2012": [1, 5, 6, 7, 8, 10, 12, 13, 18, 20, 23, 25, 26, 27, 34, 85, 86, 161], "2013": [1, 3, 5, 6, 8, 10, 12, 13, 18, 20, 22, 23, 25, 27, 34, 50], "2014": [1, 3, 4, 5, 6, 8, 10, 12, 13, 18, 19, 20, 22, 25, 27, 32, 34, 86, 161], "2015": [1, 3, 4, 5, 6, 8, 10, 12, 13, 18, 19, 21, 22, 25, 27, 32, 43, 48, 60, 161], "2016": [1, 3, 4, 5, 6, 8, 10, 12, 13, 18, 19, 21, 24, 25, 32, 43, 48, 50, 51, 60, 91, 161], "2017": [1, 3, 5, 8, 9, 10, 12, 13, 16, 19, 24, 25, 32, 42, 43, 48, 56, 60], "2018": [3, 5, 9, 10, 11, 12, 13, 16, 19, 24, 25, 32, 39, 42, 43, 46, 48, 53, 56, 64, 125], "2019": [1, 3, 5, 8, 10, 11, 12, 13, 15, 16, 18, 19, 24, 25, 33, 39, 40, 42, 43, 46, 48, 56, 60, 64, 120], "2020": [1, 2, 3, 5, 10, 11, 12, 13, 15, 16, 24, 39, 42, 43, 46, 57, 62, 70, 75, 120, 137], "2021": [1, 2, 3, 5, 10, 11, 12, 13, 16, 19, 21, 24, 25, 33, 39, 40, 42, 43, 48, 64, 67, 120, 161], "2022": [2, 3, 5, 8, 10, 11, 13, 16, 17, 18, 19, 21, 24, 29, 33, 39, 40, 42, 43, 45, 47, 48, 64, 120, 161], "2023": [2, 3, 5, 8, 10, 11, 13, 16, 17, 18, 19, 21, 24, 33, 36, 39, 40, 42, 45, 47, 59, 64, 120], "2024": [2, 3, 5, 10, 11, 13, 16, 17, 18, 21, 22, 24, 33, 35, 36, 39, 40, 42, 45, 47, 59, 64, 73, 74, 120], "2025": [2, 3, 5, 10, 11, 13, 14, 17, 19, 21, 24, 33, 35, 36, 40, 59, 120, 150, 156], "2026": [2, 3, 5, 10, 11, 14, 16, 19, 21, 24, 36, 40, 41, 43, 45, 64]}, "2nd XI": {"2010": [1, 5, 8, 12, 13, 18, 22, 23, 26, 30, 32, 34, 50, 61, 65, 69, 74, 84, 85, 86, 104, 113, 118, 130, 134, 141], "2011": [5, 6, 8, 10, 13, 18, 22, 26, 30, 32, 34, 50, 61, 65, 85, 113, 130, 134, 141, 161], "2012": [0, 1, 8, 11, 13, 18, 22, 23, 26, 30, 32, 34, 50, 51, 60, 65, 74, 76, 85, 113, 130, 134, 141, 161], "2013": [3, 4, 11, 13, 18, 19, 20, 23, 26, 30, 32, 34, 37, 50, 51, 60, 65, 74, 85, 99, 115, 130, 134, 141, 161], "2014": [5, 10, 11, 13, 18, 19, 20, 23, 26, 30, 32, 33, 37, 51, 60, 61, 65, 74, 76, 99, 113, 115, 129, 130, 133, 134, 141, 142, 161], "2015": [6, 10, 11, 18, 19, 21, 22, 23, 25, 26, 27, 31, 32, 33, 34, 38, 39, 40, 48, 55, 60, 61, 65, 74, 107, 113, 135, 141, 148, 161], "2016": [1, 6, 10, 11, 12, 21, 22, 23, 24, 26, 32, 33, 34, 38, 40, 48, 50, 51, 55, 60, 78, 82, 85, 113, 141, 161], "2017": [6, 10, 11, 12, 21, 22, 24, 25, 26, 27, 32, 34, 38, 40, 43, 55, 56, 60, 85, 153], "2018": [6, 11, 15, 18, 21, 22, 24, 25, 26, 27, 31, 32, 33, 34, 38, 39, 40, 42, 43, 51, 53, 55, 60, 64, 85, 120, 125, 153, 161], "2019": [2, 6, 12, 13, 15, 18, 21, 22, 23, 25, 26, 27, 30, 33, 39, 40, 43, 46, 55, 56, 60, 64, 77, 82, 120, 125, 153, 158, 160], "2020": [2, 6, 18, 21, 25, 33, 40, 46, 55, 56, 57, 59, 60, 62, 64, 70, 77, 82, 87, 101, 120, 137, 158, 161], "2021": [2, 6, 10, 11, 13, 18, 21, 22, 24, 33, 39, 40, 42, 43, 48, 57, 60, 64, 67, 71, 75, 82, 102, 120, 137, 158, 159, 161], "2022": [2, 6, 12, 13, 16, 17, 18, 19, 22, 23, 26, 28, 29, 33, 36, 39, 40, 42, 43, 44, 45, 47, 48, 50, 52, 57, 60, 64, 71, 75, 102, 111, 120, 136, 144, 158, 159, 161], "2023": [2, 6, 11, 13, 16, 17, 18, 22, 33, 36, 39, 42, 43, 45, 52, 59, 64, 71, 72, 73, 116, 120, 132, 136, 143, 144, 155, 161], "2024": [5, 6, 10, 16, 17, 18, 19, 22, 25, 28, 33, 35, 39, 40, 42, 43, 45, 47, 52, 54, 59, 60, 64, 71, 73, 74, 92, 116, 120, 124, 131, 138, 154, 156], "2025": [6, 16, 17, 18, 22, 28, 33, 35, 39, 40, 42, 43, 45, 47, 52, 57, 59, 60, 64, 71, 74, 92, 116, 120, 132, 138, 150, 156], "2026": [6, 10, 16, 17, 18, 22, 28, 33, 39, 40, 42, 43, 45, 47, 52, 59, 64, 92, 131, 155, 156, 161]}, "3rd XI": {"2014": [5, 6, 11, 19, 21, 22, 23, 24, 33, 38, 39, 48, 51, 55, 60, 65, 106, 127, 130, 134, 139, 142, 146, 152], "2015": [6, 10, 11, 21, 23, 24, 30, 31, 33, 34, 37, 39, 40, 51, 55, 61, 66, 68, 94, 112, 113, 127, 130, 134, 135, 139, 140, 141, 148, 161], "2016": [11, 18, 21, 23, 25, 27, 30, 31, 32, 33, 39, 51, 55, 65, 66, 70, 74, 78, 82, 85, 102, 113, 135, 139, 140, 141, 148, 161], "2017": [6, 11, 21, 23, 24, 26, 27, 30, 32, 33, 38, 39, 40, 51, 55, 60, 65, 70, 85, 112, 120, 139, 141, 148, 153, 161], "2018": [5, 10, 11, 18, 23, 25, 26, 27, 30, 33, 34, 38, 39, 40, 49, 51, 55, 59, 63, 77, 82, 89, 90, 96, 97, 100, 101, 102, 110, 120, 126, 128, 139, 148, 153, 156, 160, 161], "2019": [2, 6, 18, 23, 25, 26, 27, 34, 40, 55, 59, 70, 77, 82, 93, 95, 97, 101, 102, 108, 112, 120, 153, 156, 158, 159, 160, 161], "2021": [5, 18, 23, 25, 26, 27, 45, 59, 70, 71, 77, 88, 101, 132, 136, 156, 159, 160, 161], "2022": [6, 18, 23, 24, 25, 26, 28, 36, 47, 51, 52, 59, 60, 63, 70, 71, 72, 77, 97, 103, 105, 116, 132, 136, 143, 144, 150, 154, 155, 156, 159, 160, 161], "2023": [6, 10, 25, 26, 28, 52, 59, 63, 72, 73, 83, 92, 97, 116, 131, 132, 136, 150, 154, 155, 156, 157, 159, 160, 161], "2024": [6, 16, 18, 25, 26, 28, 40, 52, 54, 59, 60, 63, 70, 72, 74, 81, 83, 88, 92, 98, 109, 116, 120, 122, 131, 138, 144, 145, 147, 149, 150, 154, 155, 156, 157, 161], "2025": [6, 18, 22, 25, 52, 59, 63, 70, 72, 74, 80, 81, 83, 92, 114, 116, 117, 119, 123, 131, 132, 138, 144, 145, 147, 149, 150, 151, 155, 157, 161], "2026": [17, 18, 25, 39, 54, 79, 80, 81, 83, 92, 123, 131, 144, 145, 149, 151, 157, 161]}}, "teams": ["1st XI", "2nd XI", "3rd XI"], "opponents": [{"n": "South Wilts CC 2nd XI", "s": 82}, {"n": "Cadnam CC 1st XI", "s": 79}, {"n": "Winton CC, Dorset 1st XI", "s": 77}, {"n": "Calmore Sports CC 2nd XI", "s": 75}, {"n": "Mudeford CC 1st XI", "s": 74}, {"n": "Lymington CC 2nd XI", "s": 72}, {"n": "Verwood CC 1st XI", "s": 70}, {"n": "Fair Oak CC 2nd XI", "s": 69}, {"n": "East Woodhay CC 1st XI", "s": 67}], "budget": 850, "squad": 11, "rounds": 18, "minRoles": {"BAT": 3, "BOWL": 3, "WK": 1}};
+const PLAYERS = GAMEDATA.players;
+const APPEAR  = GAMEDATA.appear;
+const TEAMS   = GAMEDATA.teams;
+const OPPONENTS= GAMEDATA.opponents;
+const BUDGET  = GAMEDATA.budget;
+const SQUAD_SIZE = GAMEDATA.squad;
+const ROUNDS  = GAMEDATA.rounds;
+
+const DIFF = {
+  easy:  {respins:5, oppBump:-8, label:"Easy",   desc:"5 re-spins · softer rivals"},
+  normal:{respins:2, oppBump:0,  label:"Normal", desc:"2 re-spins · true division"},
+  hard:  {respins:0, oppBump:6,  label:"Hard",   desc:"No re-spins · brutal division"}
+};
+// all valid (team,year) combos from the real data
+const COMBOS = [];
+TEAMS.forEach(t=>{ Object.keys(APPEAR[t]||{}).forEach(y=>{ if(APPEAR[t][y].length) COMBOS.push({team:t,year:+y}); }); });
+
+const store = {
+  read(){ try{ return JSON.parse(localStorage.getItem("lpcc18real"))||{}; }catch(e){ return {}; } },
+  write(o){ try{ localStorage.setItem("lpcc18real", JSON.stringify(o)); }catch(e){} }
+};
+let S = { diff:"normal", showRatings:true, budgetLeft:BUDGET, respins:2, picks:[], spin:null,
+  schedule:[], table:[], round:0, playing:false, timer:null, teamRating:null, bat:{}, wk:{}, _share:"" };
+
+const screens=["title","settings","draft","xi","season","end"];
+function go(name){ screens.forEach(s=>document.getElementById("s-"+s).classList.toggle("active", s===name)); window.scrollTo({top:0}); if(name==="title") paintTitle(); }
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove("show"),1900); }
+function roleName(r){return r==="AR"?"All-rounder":r==="WK"?"Keeper":r==="BAT"?"Batter":"Bowler";}
+
+function paintTitle(){ const d=store.read(); document.getElementById("t-best").textContent=d.bestWins||0; document.getElementById("t-unbeaten").textContent=d.unbeaten||0; document.getElementById("t-runs").textContent=d.runs||0; }
+
+function buildSettings(){
+  document.getElementById("set-budget").textContent=BUDGET;
+  document.getElementById("set-avg").textContent=Math.round(BUDGET/SQUAD_SIZE);
+  const dEl=document.getElementById("opt-diff"); dEl.innerHTML="";
+  ["easy","normal","hard"].forEach(k=>{ const o=document.createElement("button"); o.className="opt"+(S.diff===k?" sel":"");
+    o.innerHTML='<div class="ot">'+DIFF[k].label+'</div><div class="od">'+DIFF[k].desc+'</div>'; o.onclick=()=>{S.diff=k;buildSettings();}; dEl.appendChild(o); });
+  const rEl=document.getElementById("opt-rate"); rEl.innerHTML="";
+  [["hidden","Hidden","Trust your gut"],["visible","Visible","See every rating"]].forEach(a=>{ const o=document.createElement("button");
+    const sel=(a[0]==="visible")===S.showRatings; o.className="opt"+(sel?" sel":"");
+    o.innerHTML='<div class="ot">'+a[1]+'</div><div class="od">'+a[2]+'</div>'; o.onclick=()=>{S.showRatings=(a[0]==="visible");buildSettings();}; rEl.appendChild(o); });
+}
+
+const MINROLES = GAMEDATA.minRoles || {BAT:3,BOWL:3,WK:1};
+const SORTED_ALL = PLAYERS.map((_,i)=>i).sort((a,b)=>PLAYERS[a].ovr-PLAYERS[b].ovr);
+const SORTED_ROLE = {BAT:[],BOWL:[],WK:[]};
+SORTED_ALL.forEach(i=>{ if(SORTED_ROLE[PLAYERS[i].r]!==undefined) SORTED_ROLE[PLAYERS[i].r].push(i); });
+
+function startDraft(){ S.budgetLeft=BUDGET; S.respins=DIFF[S.diff].respins; S.picks=[]; S.spin=null; go("draft"); renderTracker(); renderDraftStats(); nextSpin(false); }
+
+function roleCounts(picks){ const c={BAT:0,BOWL:0,AR:0,WK:0}; picks.forEach(i=>c[PLAYERS[i].r]++); return c; }
+function rolesMet(){ const c=roleCounts(S.picks); return c.BAT>=MINROLES.BAT && c.BOWL>=MINROLES.BOWL && c.WK>=MINROLES.WK; }
+
+// minimum cost to fill the slots remaining after `picks`, while meeting role minimums (Infinity if impossible)
+function minCostToComplete(picks){
+  const used=new Set(picks); const cnt=roleCounts(picks);
+  const slots=SQUAD_SIZE-picks.length;
+  const def={BAT:Math.max(0,MINROLES.BAT-cnt.BAT),BOWL:Math.max(0,MINROLES.BOWL-cnt.BOWL),WK:Math.max(0,MINROLES.WK-cnt.WK)};
+  const totalDef=def.BAT+def.BOWL+def.WK;
+  if(totalDef>slots) return Infinity;
+  let cost=0;
+  for(const role of ["BAT","BOWL","WK"]){
+    let need=def[role]; if(need<=0) continue; const list=SORTED_ROLE[role];
+    for(let k=0;k<list.length && need>0;k++){ const idx=list[k]; if(used.has(idx)) continue; cost+=PLAYERS[idx].ovr; used.add(idx); need--; }
+    if(need>0) return Infinity;
+  }
+  let flex=slots-totalDef;
+  for(let k=0;k<SORTED_ALL.length && flex>0;k++){ const idx=SORTED_ALL[k]; if(used.has(idx)) continue; cost+=PLAYERS[idx].ovr; used.add(idx); flex--; }
+  return flex>0?Infinity:cost;
+}
+// can we sign player i now and still finish a legal XI (3 bat / 3 bowl / 1 keeper) within budget?
+function canPick(i){
+  if(S.picks.includes(i) || S.picks.length>=SQUAD_SIZE) return false;
+  if(PLAYERS[i].ovr>S.budgetLeft) return false;
+  return PLAYERS[i].ovr + minCostToComplete(S.picks.concat([i])) <= S.budgetLeft;
+}
+
+function findSpin(){
+  const valid=COMBOS.map(c=>{ const opts=APPEAR[c.team][c.year]; const ok=opts.filter(canPick).length; return {team:c.team,year:c.year,opts,ok}; }).filter(c=>c.ok>0);
+  if(!valid.length){
+    for(const c of COMBOS){ if(APPEAR[c.team][c.year].some(canPick)) return {team:c.team,year:c.year,opts:APPEAR[c.team][c.year]}; }
+    return null;
+  }
+  const rich=valid.filter(c=>c.ok>=2); const from=rich.length?rich:valid;
+  return from[Math.floor(Math.random()*from.length)];
+}
+function nextSpin(animate){
+  if(S.picks.length>=SQUAD_SIZE){ renderPool(); return; }
+  S.spin=findSpin();
+  if(animate){
+    const box=document.getElementById("spinbox"); box.classList.add("spinning");
+    const el=document.getElementById("spin-team"); let ticks=0; clearInterval(el._iv);
+    el._iv=setInterval(()=>{ const c=COMBOS[Math.floor(Math.random()*COMBOS.length)];
+      el.innerHTML=c.team+' <span class="yr">'+c.year+'</span>';
+      if(++ticks>10){ clearInterval(el._iv); box.classList.remove("spinning"); showSpin(); } },70);
+  } else showSpin();
+}
+function showSpin(){
+  const el=document.getElementById("spin-team");
+  if(!S.spin){ el.textContent="—"; renderPool(); return; }
+  el.innerHTML="Longparish "+S.spin.team+' <span class="yr">'+S.spin.year+'</span>';
+  document.getElementById("spin-count").textContent=S.spin.opts.length+" players turned out that season";
+  renderPool();
+}
+function manualRespin(){ if(S.respins<=0){ toast("No re-spins left on this difficulty"); return; } S.respins--; renderDraftStats(); nextSpin(true); }
+
+function pickPlayer(i){
+  if(!canPick(i)){ toast("Can't sign "+PLAYERS[i].n+" — keep room for 3 batters, 3 bowlers & a keeper"); return; }
+  S.picks.push(i); S.budgetLeft-=PLAYERS[i].ovr; renderTracker(); renderDraftStats();
+  if(S.picks.length>=SQUAD_SIZE){ S.spin=null; document.getElementById("spin-team").textContent="Squad complete"; document.getElementById("spin-count").textContent=""; renderPool(); }
+  else nextSpin(true);
+}
+function dropPlayer(i){ const idx=S.picks.indexOf(i); if(idx<0) return; S.picks.splice(idx,1); S.budgetLeft+=PLAYERS[i].ovr; renderTracker(); renderDraftStats(); if(!S.spin && S.picks.length<SQUAD_SIZE) nextSpin(false); else renderPool(); }
+
+function renderDraftStats(){
+  document.getElementById("d-left").textContent=S.budgetLeft;
+  document.getElementById("d-spent").textContent=BUDGET-S.budgetLeft;
+  document.getElementById("d-respins").textContent=S.respins;
+  document.getElementById("pick-label").textContent="PICK "+Math.min(S.picks.length+1,SQUAD_SIZE)+" OF "+SQUAD_SIZE;
+  const pct=Math.min(100,((BUDGET-S.budgetLeft)/BUDGET)*100); const bar=document.getElementById("d-bar");
+  bar.querySelector("i").style.width=pct+"%"; bar.classList.toggle("over", S.budgetLeft<0);
+  document.getElementById("btn-confirm").disabled = !(S.picks.length===SQUAD_SIZE && rolesMet());
+  document.getElementById("btn-respin").disabled = S.respins<=0 || S.picks.length>=SQUAD_SIZE;
+}
+function renderPool(){
+  const wrap=document.getElementById("pool"); wrap.innerHTML="";
+  if(S.picks.length>=SQUAD_SIZE){ wrap.innerHTML='<div class="empty-note">Your eleven is complete — hit Confirm XI above.</div>'; return; }
+  if(!S.spin){ wrap.innerHTML=""; return; }
+  const picked=new Set(S.picks);
+  const opts=S.spin.opts.slice().sort((a,b)=>PLAYERS[b].ovr-PLAYERS[a].ovr);
+  opts.forEach(i=>{
+    const p=PLAYERS[i]; const isPk=picked.has(i); const ok=canPick(i);
+    const c=document.createElement("button");
+    c.className="pcard"+(isPk?" picked":(ok?"":" unaff"));
+    if(ok) c.onclick=()=>pickPlayer(i);
+    const cost=S.showRatings?p.ovr:"·";
+    c.innerHTML='<span class="cost">'+cost+'</span><div class="pn">'+p.n+'</div>'+
+      '<div class="meta"><span class="role '+p.r+'">'+roleName(p.r)+'</span></div>'+
+      (isPk?'<span class="pickflag">✓ SIGNED</span>':'');
+    wrap.appendChild(c);
+  });
+}
+function renderTracker(){
+  document.getElementById("roster-count").textContent=S.picks.length+" / "+SQUAD_SIZE;
+  const cats=[["BAT","Batters",MINROLES.BAT],["AR","All-rounders",0],["WK","Keeper(s)",MINROLES.WK],["BOWL","Bowlers",MINROLES.BOWL]];
+  const grid=document.getElementById("roster-grid"); grid.innerHTML="";
+  cats.forEach(cat=>{
+    const role=cat[0], label=cat[1], min=cat[2];
+    const mine=S.picks.filter(i=>PLAYERS[i].r===role);
+    const col=document.createElement("div"); col.className="roster-col";
+    let head='<h4><span>'+label+'</span>';
+    head += min>0 ? '<span class="ct '+(mine.length>=min?"ok":"need")+'">'+mine.length+'/'+min+'</span>' : '<span class="ct">'+mine.length+'</span>';
+    head+='</h4>';
+    let chips='<div class="roster-chips">';
+    mine.forEach(i=>{ chips+='<div class="rchip"><span class="nm">'+PLAYERS[i].n+'<span class="cc">'+(S.showRatings?PLAYERS[i].ovr:"·")+'</span></span><button title="Drop" onclick="dropPlayer('+i+')">&times;</button></div>'; });
+    if(min>0 && mine.length<min) chips+='<div class="rempty">need '+(min-mine.length)+' more</div>';
+    else if(mine.length===0) chips+='<div class="rempty">—</div>';
+    chips+='</div>';
+    col.innerHTML=head+chips; grid.appendChild(col);
+  });
+  const rule=document.getElementById("roster-rule");
+  rule.className="roster-rule small"+(rolesMet()?" met":"");
+  rule.textContent=rolesMet()?"Minimums met ✓ — 3 batters, 3 bowlers and a keeper in place.":"Minimum: 3 batters · 3 bowlers · 1 keeper — fill the other four however you like.";
+}
+
+function computeTeam(idxs){
+  const ps=idxs.map(i=>PLAYERS[i]);
+  const bats=ps.map(p=>p.bat).sort((a,b)=>b-a).slice(0,7);
+  const bowls=ps.map(p=>p.bowl).sort((a,b)=>b-a).slice(0,5);
+  const tb=Math.round(bats.reduce((a,b)=>a+b,0)/bats.length), tw=Math.round(bowls.reduce((a,b)=>a+b,0)/bowls.length);
+  const hasWK=ps.some(p=>p.r==="WK"); const field=hasWK?2:-4;
+  const gap=Math.abs(tb-tw); const balance=gap>28?-Math.round((gap-28)/3):0;
+  return {bat:tb,bowl:tw,ovr:Math.max(0,Math.min(100,Math.round(tb*0.5+tw*0.5+field+balance))),hasWK,balance};
+}
+function fieldAvg(){ const b=DIFF[S.diff].oppBump; return OPPONENTS.reduce((a,o)=>a+o.s+b,0)/OPPONENTS.length; }
+function pNotLose(my,opp){ const d=(my+2)-opp; const draw=0.05; return draw+(1/(1+Math.exp(-d/9)))*(1-draw); }
+
+function confirmXI(){ if(S.picks.length!==SQUAD_SIZE || !rolesMet()) return; S.teamRating=computeTeam(S.picks); renderXI(); go("xi"); }
+function renderXI(){
+  const tr=S.teamRating;
+  document.getElementById("x-ovr").textContent=tr.ovr; document.getElementById("x-bat").textContent=tr.bat; document.getElementById("x-bowl").textContent=tr.bowl;
+  document.getElementById("x-spent").textContent=BUDGET-S.budgetLeft;
+  const edge=tr.ovr-fieldAvg(); document.getElementById("x-finish").textContent= edge>9?"1st":edge>4?"Top 3":edge>-2?"Mid-table":edge>-8?"Lower half":"Relegation";
+  const b=DIFF[S.diff].oppBump; let odds=1; OPPONENTS.forEach(o=>{ odds*=pNotLose(tr.ovr,o.s+b); }); odds=Math.pow(odds,ROUNDS/OPPONENTS.length);
+  const pct=odds*100; document.getElementById("x-odds").textContent= pct>=10?pct.toFixed(0)+"%":pct>=1?pct.toFixed(1)+"%":"1 in "+Math.round(1/odds);
+  document.getElementById("x-verdict").textContent=verdict(tr);
+  const list=document.getElementById("x-list"); list.innerHTML="";
+  S.picks.slice().sort((a,b2)=>PLAYERS[b2].ovr-PLAYERS[a].ovr).forEach(i=>{ const p=PLAYERS[i]; const row=document.createElement("div"); row.className="row";
+    row.innerHTML='<span>'+p.n+' <span class="rr">'+roleName(p.r)+'</span></span><span class="rr">'+(S.showRatings?p.ovr:"·")+'</span>'; list.appendChild(row); });
+}
+function verdict(tr){
+  if(!tr.hasWK) return "No recognised keeper in the side — the local press are already circling. Brave.";
+  if(tr.balance<0) return "The committee mutters about balance: this XI leans hard one way. Exciting, risky.";
+  if(tr.ovr>=82) return "The bar at the pavilion is buzzing — this looks the strongest Longparish side in years.";
+  if(tr.ovr>=74) return "A genuinely useful XI. Get the basics right and the unbeaten dream is alive.";
+  if(tr.ovr>=66) return "Honest village cricket. You'll need a few heroes and the rub of the green.";
+  return "Plucky underdogs. The whole valley loves a giant-killing — go and write one.";
+}
+
+function makeSchedule(n){ const idx=[...Array(n).keys()]; let list=idx.slice(1); const half=n/2; const leg=[];
+  for(let r=0;r<n-1;r++){ const round=[[0,list[list.length-1]]]; for(let i=0;i<half-1;i++) round.push([list[i],list[list.length-2-i]]); leg.push(round); list.unshift(list.pop()); }
+  return leg.concat(leg.map(rd=>rd.map(p=>[p[1],p[0]]))); }
+function ratingByIndex(i){ return i===0?S.teamRating.ovr:OPPONENTS[i-1].s+DIFF[S.diff].oppBump; }
+function nameByIndex(i){ return i===0?"Longparish CC":OPPONENTS[i-1].n; }
+function simFixture(h,a){
+  const hr=ratingByIndex(h)+4, ar=ratingByIndex(a), diff=hr-ar; const pHome=1/(1+Math.exp(-diff/9)); const rnd=Math.random();
+  let res; if(rnd<0.05) res="D"; else res=(Math.random()<pHome)?"H":"A";
+  let margin=0,byWk=false,hN=0,aN=0;
+  if(res!=="D"){ const base=Math.abs(res==="H"?diff:-diff); margin=Math.max(3,Math.round(base*0.6+Math.random()*40)); byWk=Math.random()<0.5;
+    if(byWk) margin=Math.min(9,Math.max(1,Math.round(margin/14)+1)); const d=byWk?margin*0.06:margin*0.012; if(res==="H"){hN=d;aN=-d;}else{hN=-d;aN=d;} }
+  return {res,margin,byWk,hN,aN};
+}
+function initTable(n){ S.table=[...Array(n).keys()].map(i=>({i,name:nameByIndex(i),P:0,W:0,D:0,L:0,Pts:0,nrr:0})); }
+function applyResult(h,a,f){ const H=S.table[h],A=S.table[a]; H.P++;A.P++;H.nrr+=f.hN;A.nrr+=f.aN;
+  if(f.res==="D"){H.D++;A.D++;H.Pts++;A.Pts++;} else if(f.res==="H"){H.W++;A.L++;H.Pts+=2;} else {A.W++;H.L++;A.Pts+=2;} }
+
+function accrue(){
+  S.picks.forEach(i=>{ const p=PLAYERS[i]; const inn=Math.min(150,Math.round(p.bat/100*Math.pow(Math.random(),1.35)*92)); S.bat[i]=(S.bat[i]||0)+inn; });
+  const bw=S.picks.filter(i=>PLAYERS[i].bowl>=38).sort((a,b)=>PLAYERS[b].bowl-PLAYERS[a].bowl).slice(0,6);
+  if(bw.length){ const wts=bw.map(i=>Math.pow(PLAYERS[i].bowl,2)); const tot=wts.reduce((a,b)=>a+b,0); let wkts=8+Math.round(Math.random()*2);
+    for(let w=0;w<wkts;w++){ let r=Math.random()*tot; for(let k=0;k<bw.length;k++){ r-=wts[k]; if(r<=0){ S.wk[bw[k]]=(S.wk[bw[k]]||0)+1; break; } } } }
+}
+function topN(map,n){ return Object.keys(map).map(k=>[+k,map[k]]).sort((a,b)=>b[1]-a[1]).slice(0,n); }
+function renderLeaders(elId){
+  const el=document.getElementById(elId); const tb=topN(S.bat,3), tw=topN(S.wk,3);
+  const col=(title,rows,unit)=>{ let h='<div class="lead-col"><h3>'+title+'</h3>'; if(!rows.length) h+='<div class="muted small">—</div>';
+    rows.forEach((r,n)=>{ h+='<div class="lead-row"><span><span class="rk">'+(n+1)+'</span>'+PLAYERS[r[0]].n+'</span><span class="v">'+r[1]+' '+unit+'</span></div>'; }); return h+'</div>'; };
+  el.innerHTML=col("Most Runs",tb,"runs")+col("Most Wickets",tw,"wkts");
+}
+
+function beginSeason(){
+  S.schedule=makeSchedule(10); initTable(10); S.round=0; S.playing=true; S.bat={}; S.wk={};
+  document.getElementById("feed").innerHTML=""; renderTable(); renderSeasonRec(); renderLeaders("leaders-live");
+  document.getElementById("game-count").textContent="Game 0 of "+ROUNDS; document.getElementById("btn-pause").innerHTML="&#9208; Pause";
+  go("season"); scheduleTick();
+}
+function scheduleTick(){ clearTimeout(S.timer); if(!S.playing) return; S.timer=setTimeout(()=>{ stepRound(false); if(S.round<ROUNDS) scheduleTick(); }, 820); }
+function togglePlay(){ S.playing=!S.playing; document.getElementById("btn-pause").innerHTML=S.playing?"&#9208; Pause":"&#9654; Play"; if(S.playing) scheduleTick(); }
+function skipToEnd(){ S.playing=false; clearTimeout(S.timer); while(S.round<ROUNDS) stepRound(true); }
+function stepRound(silent){
+  if(S.round>=ROUNDS) return; const round=S.schedule[S.round]; let ev=null;
+  round.forEach(p=>{ const h=p[0],a=p[1],f=simFixture(h,a); applyResult(h,a,f);
+    if(h===0||a===0){ const youHome=(h===0),oppI=youHome?a:h; let y; if(f.res==="D")y="D"; else y=((f.res==="H")===youHome)?"W":"L"; ev={oppName:nameByIndex(oppI),youHome,y,f}; } });
+  S.round++; accrue();
+  if(ev && !silent) pushFeed(ev);
+  document.getElementById("game-count").textContent="Game "+S.round+" of "+ROUNDS;
+  renderTable(); renderSeasonRec(); renderLeaders("leaders-live");
+  if(S.round>=ROUNDS){ clearTimeout(S.timer); setTimeout(endSeason, silent?0:600); }
+}
+function pushFeed(ev){
+  const me=S.table[0], feed=document.getElementById("feed"); const line=document.createElement("div"); line.className="ev";
+  let r; if(ev.y==="D") r="Match drawn"; else { const v=ev.y==="W"?"Won":"Lost"; r=ev.f.byWk?(v+" by "+ev.f.margin+" wkt"+(ev.f.margin>1?"s":"")):(v+" by "+ev.f.margin+" runs"); }
+  line.innerHTML='<span class="opp">G'+me.P+'&nbsp;&nbsp;'+(ev.youHome?"vs":"@")+' '+ev.oppName+'</span><span class="res '+ev.y+'">'+r+'</span>'; feed.prepend(line);
+}
+function renderSeasonRec(){ const me=S.table[0]; document.getElementById("se-w").textContent=me.W; document.getElementById("se-d").textContent=me.D; document.getElementById("se-l").textContent=me.L; document.getElementById("se-p").textContent=me.Pts; }
+function renderTable(){
+  const sorted=S.table.slice().sort((a,b)=>b.Pts-a.Pts||b.nrr-a.nrr||b.W-a.W); const body=document.getElementById("table-body"); body.innerHTML="";
+  sorted.forEach((row,pos)=>{ const tr=document.createElement("tr"); if(row.i===0) tr.className="you";
+    tr.innerHTML='<td class="pos">'+(pos+1)+'</td><td class="tn">'+row.name+'</td><td>'+row.P+'</td><td>'+row.W+'</td><td>'+row.D+'</td><td>'+row.L+'</td><td><b>'+row.Pts+'</b></td><td>'+(row.nrr>=0?"+":"")+row.nrr.toFixed(2)+'</td>';
+    body.appendChild(tr); });
+}
+function endSeason(){
+  const sorted=S.table.slice().sort((a,b)=>b.Pts-a.Pts||b.nrr-a.nrr||b.W-a.W); const pos=sorted.findIndex(r=>r.i===0)+1; const me=S.table[0]; const unbeaten=me.L===0;
+  document.getElementById("end-score").textContent=me.W+"-"+me.L;
+  document.getElementById("end-tag").textContent= unbeaten?(me.W===ROUNDS?"PERFECT SEASON — 18 AND 0":"UNBEATEN CAMPAIGN"):(me.L===1?"So close — beaten just once":"The unbeaten dream is over");
+  document.getElementById("e-pos").textContent=ordinal(pos); document.getElementById("e-pts").textContent=me.Pts; document.getElementById("e-record").textContent=me.W+"–"+me.D+"–"+me.L;
+  renderLeaders("leaders-end");
+  const tb=topN(S.bat,1), tw=topN(S.wk,1);
+  const champ=pos===1;
+  const share="🏏 LONGPARISH CC · 18-0\n"+DIFF[S.diff].label+" · team rating "+S.teamRating.ovr+" (Bat "+S.teamRating.bat+"/Bowl "+S.teamRating.bowl+")\n"+
+    "Record: "+me.W+"W "+me.D+"D "+me.L+"L · "+me.Pts+" pts · finished "+ordinal(pos)+(champ?" 🏆":"")+"\n"+
+    (tb.length?"Top run-scorer: "+PLAYERS[tb[0][0]].n+" ("+tb[0][1]+")\n":"")+
+    (tw.length?"Top wicket-taker: "+PLAYERS[tw[0][0]].n+" ("+tw[0][1]+")\n":"")+
+    (unbeaten?(me.W===ROUNDS?"★ PERFECT 18-0 SEASON ★":"★ UNBEATEN ★"):"Beaten "+me.L+"× — back next year");
+  document.getElementById("share-text").textContent=share; S._share=share;
+  const d=store.read(); d.runs=(d.runs||0)+1; d.bestWins=Math.max(d.bestWins||0,me.W); if(unbeaten) d.unbeaten=(d.unbeaten||0)+1; store.write(d);
+  go("end");
+}
+function ordinal(n){const s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);}
+function copyShare(){ const t=S._share||""; if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(()=>toast("Result copied")).catch(()=>fb(t)); else fb(t);
+  function fb(x){ const ta=document.createElement("textarea"); ta.value=x; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");toast("Result copied");}catch(e){toast("Press Ctrl/Cmd+C");} document.body.removeChild(ta); } }
+
+buildSettings(); paintTitle();
+</script>
+</body>
+</html>
